@@ -87,6 +87,9 @@ function checkOS() {
 				exit 1
 			fi
 		fi
+		if [[ $ID == "uos" ]]; then
+			OS="uos" 
+		fi
 	elif [[ -e /etc/arch-release ]]; then
 		OS=arch
 	else
@@ -729,6 +732,8 @@ function installOpenVPN() {
 		elif [[ $OS == 'arch' ]]; then
 			# Install required dependencies and upgrade the system
 			pacman --needed --noconfirm -Syu openvpn iptables openssl wget ca-certificates curl
+		elif [[ $OS == 'uos' ]]; then
+			yum install -y openvpn iptables openssl wget ca-certificates curl tar 'policycoreutils-python*'
 		fi
 		# An old version of easy-rsa was available by default in some openvpn packages
 		if [[ -d /etc/openvpn/easy-rsa/ ]]; then
@@ -963,7 +968,7 @@ verb 3" >>/etc/openvpn/server.conf
 	fi
 
 	# Finally, restart and enable OpenVPN
-	if [[ $OS == 'arch' || $OS == 'fedora' || $OS == 'centos' || $OS == 'oracle' || $OS == 'amzn2023' ]]; then
+	if [[ $OS == 'uos' || $OS == 'arch' || $OS == 'fedora' || $OS == 'centos' || $OS == 'oracle' || $OS == 'amzn2023' ]]; then
 		# Don't modify package-provided service
 		cp /usr/lib/systemd/system/openvpn-server@.service /etc/systemd/system/openvpn-server@.service
 

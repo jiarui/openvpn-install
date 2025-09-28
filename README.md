@@ -145,6 +145,7 @@ The script supports these Linux distributions:
 | Oracle Linux 8         | ✅      |
 | Rocky Linux 8          | ✅      |
 | Ubuntu >= 18.04        | ✅ 🤖   |
+| UOS Server 20          | ✅      |
 
 To be noted:
 
